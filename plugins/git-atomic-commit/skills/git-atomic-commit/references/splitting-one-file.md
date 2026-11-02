@@ -9,8 +9,14 @@ Both methods below were verified to work non-interactively. Pick by situation:
 
 | Method | Use when | Risk |
 |---|---|---|
-| **A: slice the patch** | Changes are a few lines, far apart in the file | Patch may not apply; nothing is lost if it fails |
-| **B: rebuild the content** | Patch slicing failed, or the changes are large or interleaved | Destroys work if the backup step is skipped |
+| **A: patch the index** | Almost always - including when both changes share one hunk | Patch may not apply; nothing is lost if it fails |
+| **B: rebuild the content** | Only when A genuinely cannot express the split | Destroys work if the backup step is skipped; rewrites line endings |
+
+**Prefer Method A, and try it even for changes on adjacent lines.** It applies to the
+index with `--cached` and never writes the working tree, so the user's file is never
+at risk and line endings are never rewritten. Method B returns the file to its
+committed state on disk, which both risks the content and, on Windows, changes its
+line endings underneath you. Treat B as the last resort rather than the robust option.
 
 ## Why not `git add -p`
 
@@ -55,15 +61,35 @@ Then commit the remainder normally (`git add path/to/file.py && git commit`).
 file and blob the patch applies to. A hunk without them applies to nothing.
 
 **If `git apply` fails**, do not start loosening flags blindly. `--recount` already
-handles bad line counts. The usual real causes are a corrupted header, overlapping
-context between adjacent hunks, or line-ending mismatch - on Windows, `core.autocrlf`
-can make the patch text disagree with the index. Nothing has changed at this point,
-so switch to Method B rather than retrying.
+handles bad line counts. The usual real causes are a corrupted header or context lines
+that do not match the index - check them against `git show HEAD:<path>` rather than
+against the working tree, since the working tree already holds your edits. Nothing has
+changed when apply fails, so there is no cleanup to do.
 
-**Adjacent hunks are the common trap.** If the two changes are only a few lines apart,
-their context lines overlap and slicing produces a patch that cannot apply cleanly.
-Generating the diff with more context (`git diff -U5`) sometimes separates them; if the
-changes are genuinely interleaved, Method B is the right tool.
+### When both changes live in one hunk
+
+Changes on adjacent lines come out as a *single* `@@` hunk, so there is no boundary to
+slice on. This is where it is tempting to give up on Method A and rebuild the file - but
+Method A still works, because a patch is built from lines, not hunks. Write a patch
+containing the change you want, and include the *other* change's *original* line as an
+ordinary context line:
+
+```diff
+--- a/src/pricing.py
++++ b/src/pricing.py
+@@ -10,4 +10,4 @@
+     total = compute_total(order["items"])
+-    rate = 0.10
++    rate = 0.20 if order.get("loyalty") else 0.10
+     log.debug("discount")
+     return total - discount
+```
+
+The `log.debug("discount")` line is the pre-edit text, so it matches the index and the
+patch applies, staging only the rate change. The working tree keeps both edits and the
+second one shows up as the next commit. Verify with `git diff --cached` before committing.
+
+This keeps the whole split index-only, which is why it is preferable to rebuilding.
 
 ## Method B - rebuild the file content
 
@@ -78,6 +104,10 @@ test -s /tmp/file.py.full || echo "BACKUP FAILED - stop here"
 
 # 2. Return the file to its committed state. This discards the working-tree
 #    changes, which is why step 1 must be verified before running it.
+#    WARNING: with core.autocrlf=true this writes the file with CRLF endings even
+#    when the committed blob is LF, so a later exact-string edit silently matches
+#    nothing. Check with `file path/to/file.py`, and read and write the file with
+#    explicit LF endings for the rest of this procedure.
 git checkout -- path/to/file.py
 
 # 3. Re-apply ONLY the first logical change (a normal edit), then commit it.
