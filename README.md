@@ -39,7 +39,25 @@ claude --plugin-dir ./plugins/git-atomic-commit
 
 ### Other agents
 
-Copy a skill folder (for example `plugins/git-atomic-commit/skills/git-atomic-commit/`)
+Any agent that reads `SKILL.md` can use these skills. The quickest route is the open
+[`skills`](https://github.com/vercel-labs/skills) CLI behind [skills.sh](https://skills.sh),
+which supports Claude Code, Codex, Cursor, OpenCode and many others:
+
+```bash
+# see what is available
+npx skills add roselletabuena/skills --list
+
+# install one skill into the current project
+npx skills add roselletabuena/skills --skill git-atomic-commit
+
+# add -g for all projects, -a to target a specific agent
+npx skills add roselletabuena/skills --skill git-atomic-commit -g -a claude-code
+```
+
+The `speckit-orchestrator` skills depend on each other, so install them together; the exact
+command is in [its README](plugins/speckit-orchestrator/README.md#skillssh-and-other-agents).
+
+Or copy a skill folder by hand (for example `plugins/git-atomic-commit/skills/git-atomic-commit/`)
 into the directory your agent discovers skills from. For Google Antigravity that is
 `<workspace>/.agent/skills/` for one project or `~/.gemini/antigravity/skills/` for all
 projects; restart the agent session afterwards so it re-detects them. Check your agent's
