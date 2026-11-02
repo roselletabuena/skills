@@ -1,0 +1,3 @@
+# core.autocrlf=true would hand shell scripts CRLF on checkout, and bash fails on
+# the trailing \r. Keep every text file in this repo LF in the working tree.
+* text=auto eol=lf
