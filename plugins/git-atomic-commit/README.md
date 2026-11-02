@@ -19,7 +19,7 @@ non-interactive environments.
 | :--- | :--- |
 | `skills/git-atomic-commit/SKILL.md` | The skill |
 | `skills/git-atomic-commit/references/splitting-one-file.md` | Techniques for staging part of a file |
-| `skills/git-atomic-commit/evals/` | Three eval cases with graders |
+| `skills/git-atomic-commit/evals/` | Eval cases, each with a scaffold script and graders |
 
 ## Prerequisites
 
