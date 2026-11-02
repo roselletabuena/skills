@@ -12,7 +12,7 @@ that read the same format can use the skill folders directly. See
 | Plugin | What it does |
 | :--- | :--- |
 | [**speckit-orchestrator**](plugins/speckit-orchestrator/) | An orchestration layer for [GitHub Spec Kit](https://github.com/github/spec-kit): drives one feature end to end in an isolated git worktree behind an 8-artifact gate, batch-executes tickets with failure isolation, and runs autonomous sprints via context-isolated subagents. Five skills. |
-| [**git-workflows**](plugins/git-workflows/) | Git skills for the places the obvious approach quietly goes wrong. `git-atomic-commit` splits working-tree changes into single-purpose commits, ordered so each builds and messaged to match the repository's style (with an eval suite). `git-stacked-pr-rebase` restacks dependent PRs after a lower one is squash-merged or amended. Two skills. |
+| [**git-workflows**](plugins/git-workflows/) | Git skills for the places the obvious approach quietly goes wrong. `git-atomic-commit` splits working-tree changes into single-purpose commits, ordered so each builds and messaged to match the repository's style (with an eval suite). `git-stacked-pr-rebase` restacks dependent PRs after a lower one is squash-merged or amended. `git-safe-history-rewrite` decides revert vs. rewrite and pushes with a lease. `git-undo-recovery` gets lost commits, branches and stashes back via the reflog. `git-conflict-resolution` resolves conflicts by combining intent, not picking a side. `git-bisect-regression` finds the commit that broke something. `git-branch-cleanup` deletes merged branches, squash-merged ones included, without losing work. Seven skills. |
 
 ---
 
