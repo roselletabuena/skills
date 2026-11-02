@@ -1,0 +1,19 @@
+{
+  "name": "speckit-orchestrator",
+  "version": "0.1.0",
+  "description": "Orchestration layer for GitHub Spec Kit: drives features end-to-end in isolated git worktrees, batch-executes Jira tickets, and runs autonomous sprints via context-isolated subagents.",
+  "author": {
+    "name": "Roselle Tabuena"
+  },
+  "license": "MIT",
+  "keywords": [
+    "spec-kit",
+    "spec-driven-development",
+    "orchestration",
+    "git-worktree",
+    "jira",
+    "tdd",
+    "subagents",
+    "pull-request"
+  ]
+}
