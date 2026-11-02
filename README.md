@@ -12,7 +12,7 @@ that read the same format can use the skill folders directly. See
 | Plugin | What it does |
 | :--- | :--- |
 | [**speckit-orchestrator**](plugins/speckit-orchestrator/) | An orchestration layer for [GitHub Spec Kit](https://github.com/github/spec-kit): drives one feature end to end in an isolated git worktree behind an 8-artifact gate, batch-executes tickets with failure isolation, and runs autonomous sprints via context-isolated subagents. Five skills. |
-| [**git-atomic-commit**](plugins/git-atomic-commit/) | Splits working-tree changes into atomic, single-purpose commits — grouped into logical units, ordered so each commit builds, messaged to match the repository's existing style. Includes an eval suite. |
+| [**git-workflows**](plugins/git-workflows/) | Git skills for the places the obvious approach quietly goes wrong. `git-atomic-commit` splits working-tree changes into single-purpose commits, ordered so each builds and messaged to match the repository's style (with an eval suite). `git-stacked-pr-rebase` restacks dependent PRs after a lower one is squash-merged or amended. Two skills. |
 
 ---
 
@@ -25,7 +25,7 @@ Add the marketplace once, then install whichever plugins you want:
 ```bash
 claude plugin marketplace add roselletabuena/skills
 claude plugin install speckit-orchestrator@agent-skills
-claude plugin install git-atomic-commit@agent-skills
+claude plugin install git-workflows@agent-skills
 ```
 
 Or from inside a session: `/plugin marketplace add roselletabuena/skills`, then install
@@ -34,7 +34,7 @@ from the `/plugin` panel.
 To try one without installing, point Claude Code straight at its directory:
 
 ```bash
-claude --plugin-dir ./plugins/git-atomic-commit
+claude --plugin-dir ./plugins/git-workflows
 ```
 
 ### Other agents
@@ -48,16 +48,16 @@ which supports Claude Code, Codex, Cursor, OpenCode and many others:
 npx skills add roselletabuena/skills --list
 
 # install one skill into the current project
-npx skills add roselletabuena/skills --skill git-atomic-commit
+npx skills add roselletabuena/skills --skill git-stacked-pr-rebase
 
 # add -g for all projects, -a to target a specific agent
-npx skills add roselletabuena/skills --skill git-atomic-commit -g -a claude-code
+npx skills add roselletabuena/skills --skill git-stacked-pr-rebase -g -a claude-code
 ```
 
 The `speckit-orchestrator` skills depend on each other, so install them together; the exact
 command is in [its README](plugins/speckit-orchestrator/README.md#skillssh-and-other-agents).
 
-Or copy a skill folder by hand (for example `plugins/git-atomic-commit/skills/git-atomic-commit/`)
+Or copy a skill folder by hand (for example `plugins/git-workflows/skills/git-atomic-commit/`)
 into the directory your agent discovers skills from. For Google Antigravity that is
 `<workspace>/.agent/skills/` for one project or `~/.gemini/antigravity/skills/` for all
 projects; restart the agent session afterwards so it re-detects them. Check your agent's
@@ -65,7 +65,8 @@ docs for its own path.
 
 Not every skill is equally portable:
 
-- **`git-atomic-commit`** is plain git and needs nothing else.
+- **`git-workflows`** is plain git and needs nothing else. `git-stacked-pr-rebase` wants
+  git 2.38+ and, optionally, the `gh` CLI to read and retarget PR bases.
 - **`speckit-orchestrator`** skills need Spec Kit installed, plus `git` and the `gh` CLI.
   `speckit-sprint-orchestrator` also needs an agent that can spawn subagents, and
   ticket-driven mode in `speckit-multi-implement` needs an issue-tracker MCP server

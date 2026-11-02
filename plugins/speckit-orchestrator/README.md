@@ -89,8 +89,8 @@ npx skills add roselletabuena/skills \
   --skill story-prioritizer
 ```
 
-Don't use `--all` here: it also installs the unrelated `git-atomic-commit` skill from this
-repo. `speckit-workflow` and `speckit-multi-implement` work standalone, so you can install
+Don't use `--all` here: it also installs the unrelated `git-atomic-commit` and
+`git-stacked-pr-rebase` skills from this repo. `speckit-workflow` and `speckit-multi-implement` work standalone, so you can install
 just those. Skills install into the current project by default. Add `-g` to make them
 available across projects, or `-a <agent>` to target one agent. Update or remove them later
 with `npx skills update` and `npx skills remove`.

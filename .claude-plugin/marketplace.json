@@ -11,9 +11,9 @@
       "description": "Drives Spec Kit end to end: isolated git worktrees, an 8-artifact gate, batch ticket execution, and context-isolated subagent sprints."
     },
     {
-      "name": "git-atomic-commit",
-      "source": "./plugins/git-atomic-commit",
-      "description": "Splits working-tree changes into atomic, single-purpose commits, ordered so each one builds and messaged to match the repository's style."
+      "name": "git-workflows",
+      "source": "./plugins/git-workflows",
+      "description": "Git workflow skills: splits working-tree changes into atomic commits that each build and match the repository's style, and rebases stacks of dependent PRs after a lower branch is merged or amended."
     }
   ]
 }

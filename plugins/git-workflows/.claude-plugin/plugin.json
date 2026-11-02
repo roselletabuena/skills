@@ -1,0 +1,20 @@
+{
+  "name": "git-workflows",
+  "version": "0.2.0",
+  "description": "Git workflow skills: split working-tree changes into atomic, single-purpose commits, and rebase a stack of dependent PRs after the branch underneath them changes.",
+  "author": {
+    "name": "Roselle Tabuena"
+  },
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "commits",
+    "atomic-commit",
+    "staging",
+    "rebase",
+    "stacked-prs",
+    "pull-requests",
+    "code-review",
+    "bisect"
+  ]
+}
