@@ -1,0 +1,24 @@
+{
+  "name": "agile-planning",
+  "version": "0.2.0",
+  "description": "Agile planning skills: write well-formed epics with measurable outcomes and vertical-slice stories, and user stories with a consistent title format, acceptance criteria, traced test cases, and checked dependency links, optionally created in Jira or GitHub Issues.",
+  "author": {
+    "name": "Roselle Tabuena"
+  },
+  "license": "MIT",
+  "keywords": [
+    "agile",
+    "epics",
+    "user-stories",
+    "acceptance-criteria",
+    "test-cases",
+    "gherkin",
+    "dependencies",
+    "backlog",
+    "planning",
+    "product-management",
+    "jira",
+    "github-issues",
+    "story-slicing"
+  ]
+}

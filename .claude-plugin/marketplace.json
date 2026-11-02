@@ -14,6 +14,11 @@
       "name": "git-workflows",
       "source": "./plugins/git-workflows",
       "description": "Git workflow skills: atomic commits, stacked-PR rebases, safe history rewrites (revert vs. rewrite, force-with-lease), mistake recovery via the reflog, conflict resolution, regression bisecting, and squash-aware branch cleanup."
+    },
+    {
+      "name": "agile-planning",
+      "source": "./plugins/agile-planning",
+      "description": "Agile planning skills: well-formed epics with measurable outcomes, and user stories with a consistent title format, acceptance criteria, traced test cases, and checked dependency links, optionally created in Jira or GitHub Issues."
     }
   ]
 }

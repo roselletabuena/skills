@@ -13,6 +13,7 @@ that read the same format can use the skill folders directly. See
 | :--- | :--- |
 | [**speckit-orchestrator**](plugins/speckit-orchestrator/) | An orchestration layer for [GitHub Spec Kit](https://github.com/github/spec-kit): drives one feature end to end in an isolated git worktree behind an 8-artifact gate, batch-executes tickets with failure isolation, and runs autonomous sprints via context-isolated subagents. Five skills. |
 | [**git-workflows**](plugins/git-workflows/) | Git skills for the places the obvious approach quietly goes wrong. `git-atomic-commit` splits working-tree changes into single-purpose commits, ordered so each builds and messaged to match the repository's style (with an eval suite). `git-stacked-pr-rebase` restacks dependent PRs after a lower one is squash-merged or amended. `git-safe-history-rewrite` decides revert vs. rewrite and pushes with a lease. `git-undo-recovery` gets lost commits, branches and stashes back via the reflog. `git-conflict-resolution` resolves conflicts by combining intent, not picking a side. `git-bisect-regression` finds the commit that broke something. `git-branch-cleanup` deletes merged branches, squash-merged ones included, without losing work. Seven skills. |
+| [**agile-planning**](plugins/agile-planning/) | Planning skills for turning an idea into work a team can finish. `epic-creator` writes an epic with a clear problem, measurable outcomes that never rest on invented numbers, explicit scope, and thin vertical-slice stories, and declines to inflate a task into an epic. `user-story-creator` writes a story with a consistent `ORDER STACK [FEATURE] Title` title, Given/When/Then criteria, test cases traced to every criterion, and dependency, blocks and relates-to links that are checked for direction and cycles before they are made. Both can create the tickets in Jira or GitHub Issues once you approve the draft (with an eval suite). Two skills. |
 
 ---
 
@@ -26,6 +27,7 @@ Add the marketplace once, then install whichever plugins you want:
 claude plugin marketplace add roselletabuena/skills
 claude plugin install speckit-orchestrator@agent-skills
 claude plugin install git-workflows@agent-skills
+claude plugin install agile-planning@agent-skills
 ```
 
 Or from inside a session: `/plugin marketplace add roselletabuena/skills`, then install
@@ -67,6 +69,8 @@ Not every skill is equally portable:
 
 - **`git-workflows`** is plain git and needs nothing else. `git-stacked-pr-rebase` wants
   git 2.38+ and, optionally, the `gh` CLI to read and retarget PR bases.
+- **`agile-planning`** needs nothing to write an epic. Creating the tickets in Jira or
+  GitHub Issues needs an issue-tracker MCP server configured in your agent.
 - **`speckit-orchestrator`** skills need Spec Kit installed, plus `git` and the `gh` CLI.
   `speckit-sprint-orchestrator` also needs an agent that can spawn subagents, and
   ticket-driven mode in `speckit-multi-implement` needs an issue-tracker MCP server
