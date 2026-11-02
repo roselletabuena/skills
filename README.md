@@ -1,7 +1,13 @@
 # agent-skills
 
-A Claude Code **plugin marketplace**. Each plugin here is a self-contained bundle of
-skills that can be installed on its own.
+Agent skills for spec-driven development, git workflows, and engineering automation,
+packaged as a Claude Code **plugin marketplace**. Each plugin is a self-contained bundle
+of skills that can be installed on its own.
+
+The skills are plain `SKILL.md` files (the [Agent Skills](https://agentskills.io) format),
+so they are not tied to one tool: Claude Code gets a one-command install, and other agents
+that read the same format can use the skill folders directly. See
+[Other agents](#other-agents).
 
 | Plugin | What it does |
 | :--- | :--- |
@@ -11,6 +17,8 @@ skills that can be installed on its own.
 ---
 
 ## Installation
+
+### Claude Code
 
 Add the marketplace once, then install whichever plugins you want:
 
@@ -29,8 +37,21 @@ To try one without installing, point Claude Code straight at its directory:
 claude --plugin-dir ./plugins/git-atomic-commit
 ```
 
-For another agent harness, copy the plugin's `skills/` directory into wherever that
-harness discovers skills.
+### Other agents
+
+Copy a skill folder (for example `plugins/git-atomic-commit/skills/git-atomic-commit/`)
+into the directory your agent discovers skills from. For Google Antigravity that is
+`<workspace>/.agent/skills/` for one project or `~/.gemini/antigravity/skills/` for all
+projects; restart the agent session afterwards so it re-detects them. Check your agent's
+docs for its own path.
+
+Not every skill is equally portable:
+
+- **`git-atomic-commit`** is plain git and needs nothing else.
+- **`speckit-orchestrator`** skills need Spec Kit installed, plus `git` and the `gh` CLI.
+  `speckit-sprint-orchestrator` also needs an agent that can spawn subagents, and
+  ticket-driven mode in `speckit-multi-implement` needs an issue-tracker MCP server
+  configured in your agent.
 
 ---
 
