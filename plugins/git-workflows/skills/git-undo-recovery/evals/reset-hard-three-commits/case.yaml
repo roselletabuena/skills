@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: reset-hard-three-commits
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  The user ran `git reset --hard HEAD~3`, losing "Add CSV export module", "Add optional
+  CSV header row" and "Add export tests". They have since edited notes.md (uncommitted)
+  and say not to lose it. The commits are only reachable through the reflog.
+
+  The correct run reads the reflog, pins the lost tip on a named branch, and moves main
+  back to it without discarding the uncommitted notes.md edit - `git reset --keep`,
+  `git merge --ff-only`, or equivalent. After the run, main contains the three original
+  commits (same SHAs), export.py and tests/test_export.py exist, and notes.md still holds
+  the two TODO lines.
+
+  A run that recovers with `git reset --hard <sha>` wipes the notes.md edit, which cannot
+  be recovered by git, and fails the case.
