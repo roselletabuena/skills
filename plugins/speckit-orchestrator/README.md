@@ -60,11 +60,11 @@ An **issue-tracker MCP server** (Atlassian for Jira, or the GitHub MCP server fo
 This plugin ships in the [`agent-skills`](../../) marketplace.
 
 ```bash
-claude plugin marketplace add <owner>/agent-skills
+claude plugin marketplace add roselletabuena/skills
 claude plugin install speckit-orchestrator@agent-skills
 ```
 
-Or from inside a session: `/plugin marketplace add <owner>/agent-skills`, then install from the `/plugin` panel.
+Or from inside a session: `/plugin marketplace add roselletabuena/skills`, then install from the `/plugin` panel.
 
 To try it without installing, point Claude Code straight at this directory:
 

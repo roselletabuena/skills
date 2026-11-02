@@ -23,12 +23,12 @@ that read the same format can use the skill folders directly. See
 Add the marketplace once, then install whichever plugins you want:
 
 ```bash
-claude plugin marketplace add <owner>/agent-skills
+claude plugin marketplace add roselletabuena/skills
 claude plugin install speckit-orchestrator@agent-skills
 claude plugin install git-atomic-commit@agent-skills
 ```
 
-Or from inside a session: `/plugin marketplace add <owner>/agent-skills`, then install
+Or from inside a session: `/plugin marketplace add roselletabuena/skills`, then install
 from the `/plugin` panel.
 
 To try one without installing, point Claude Code straight at its directory:

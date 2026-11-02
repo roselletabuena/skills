@@ -30,7 +30,7 @@ non-interactive environments.
 This plugin ships in the [`agent-skills`](../../) marketplace.
 
 ```bash
-claude plugin marketplace add <owner>/agent-skills
+claude plugin marketplace add roselletabuena/skills
 claude plugin install git-atomic-commit@agent-skills
 ```
 
