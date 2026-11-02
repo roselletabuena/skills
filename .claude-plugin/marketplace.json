@@ -1,0 +1,19 @@
+{
+  "name": "agent-skills",
+  "description": "Agent skills and orchestration plugins for Claude Code",
+  "owner": {
+    "name": "Roselle Tabuena"
+  },
+  "plugins": [
+    {
+      "name": "speckit-orchestrator",
+      "source": "./plugins/speckit-orchestrator",
+      "description": "Drives Spec Kit end to end: isolated git worktrees, an 8-artifact gate, batch ticket execution, and context-isolated subagent sprints."
+    },
+    {
+      "name": "git-atomic-commit",
+      "source": "./plugins/git-atomic-commit",
+      "description": "Splits working-tree changes into atomic, single-purpose commits, ordered so each one builds and messaged to match the repository's style."
+    }
+  ]
+}
