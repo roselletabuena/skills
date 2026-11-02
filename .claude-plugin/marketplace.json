@@ -13,7 +13,7 @@
     {
       "name": "git-workflows",
       "source": "./plugins/git-workflows",
-      "description": "Git workflow skills: splits working-tree changes into atomic commits that each build and match the repository's style, and rebases stacks of dependent PRs after a lower branch is merged or amended."
+      "description": "Git workflow skills: atomic commits, stacked-PR rebases, safe history rewrites (revert vs. rewrite, force-with-lease), mistake recovery via the reflog, conflict resolution, regression bisecting, and squash-aware branch cleanup."
     }
   ]
 }
