@@ -72,7 +72,34 @@ To try it without installing, point Claude Code straight at this directory:
 claude --plugin-dir ./plugins/speckit-orchestrator
 ```
 
-For another agent harness, copy this plugin's `skills/` directory into wherever it discovers skills.
+### skills.sh and other agents
+
+The skills are standard `SKILL.md` folders, so they also install through the open
+[`skills`](https://github.com/vercel-labs/skills) CLI behind [skills.sh](https://skills.sh).
+That works with Claude Code, Codex, Cursor, OpenCode and many other agents, not just
+Claude Code. Name all five skills, because `speckit-sprint-orchestrator` composes the
+others:
+
+```bash
+npx skills add roselletabuena/skills \
+  --skill speckit-workflow \
+  --skill speckit-multi-implement \
+  --skill speckit-sprint-orchestrator \
+  --skill pr-creator \
+  --skill story-prioritizer
+```
+
+Don't use `--all` here: it also installs the unrelated `git-atomic-commit` skill from this
+repo. `speckit-workflow` and `speckit-multi-implement` work standalone, so you can install
+just those. Skills install into the current project by default. Add `-g` to make them
+available across projects, or `-a <agent>` to target one agent. Update or remove them later
+with `npx skills update` and `npx skills remove`.
+
+This installs the skills only, not the plugin wrapper, so they are invoked as
+`speckit-workflow` rather than the plugin-namespaced `speckit-orchestrator:speckit-workflow`.
+Everything under [Prerequisites](#prerequisites) still applies: Spec Kit, `git` and `gh` must
+be set up separately, and `speckit-sprint-orchestrator` needs an agent that can spawn
+subagents.
 
 ---
 
