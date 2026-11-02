@@ -57,13 +57,22 @@ An **issue-tracker MCP server** (Atlassian for Jira, or the GitHub MCP server fo
 
 ## Installation
 
+This repository is both a plugin and a marketplace that lists it.
+
 ```bash
-# In Claude Code
-/plugin marketplace add <owner>/speckit-orchestrator
-/plugin install speckit-orchestrator
+claude plugin marketplace add <owner>/speckit-orchestrator
+claude plugin install speckit-orchestrator@speckit-orchestrator-marketplace
 ```
 
-Or clone into your project's plugin directory and let your agent harness discover `skills/`.
+Or from inside a session: `/plugin marketplace add <owner>/speckit-orchestrator`, then install from the `/plugin` panel.
+
+To try it without installing, point Claude Code straight at the plugin directory:
+
+```bash
+claude --plugin-dir ./plugins/speckit-orchestrator
+```
+
+For another agent harness, copy `plugins/speckit-orchestrator/skills/` into wherever it discovers skills.
 
 ---
 
