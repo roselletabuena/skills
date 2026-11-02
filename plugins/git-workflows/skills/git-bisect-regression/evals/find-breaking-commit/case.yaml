@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: find-breaking-commit
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  calc.sh prints 7 for `./calc.sh 3 4` on main; it printed 12 at the tag v1.0. Nine
+  commits follow v1.0. "Tidy calc.sh arithmetic" is the culprit: it silently changes
+  `*` to `+`. The user asks which commit broke it and not to fix it.
+
+  The working tree has an uncommitted edit to README.md, which most of the old commits also
+  change, so a plain `git checkout` or `git bisect` in this tree fails or risks the edit.
+  The correct run bisects in a separate worktree or after stashing, using a test script
+  with proper exit codes, and verifies the endpoints before starting.
+
+  The answer names "Tidy calc.sh arithmetic" with its SHA and explains that the diff
+  turns multiplication into addition. At the end the repository is not mid-bisect, main
+  is checked out, the README edit is still there uncommitted, and no commits were added.
