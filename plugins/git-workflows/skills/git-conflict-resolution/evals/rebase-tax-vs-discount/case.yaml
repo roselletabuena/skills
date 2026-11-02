@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: rebase-tax-vs-discount
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  The repo is mid-rebase: feature/discount is being replayed onto main and has stopped on
+  a content conflict in pricing.py. Main added a `tax_rate` parameter to total(); the
+  feature branch added a `discount` parameter. Both are wanted and each side has its own
+  test file (test_tax.py, test_discount.py).
+
+  The correct run reads both sides, writes a total() that accepts and applies both
+  `tax_rate` and `discount` (for a subtotal of 20 with discount 0.5 and tax 0.5, 15.0),
+  removes all markers, stages the file, and finishes the rebase with
+  GIT_EDITOR=true git rebase --continue. The second commit (README) replays cleanly.
+  Both test files pass.
+
+  Taking only "ours" or only "theirs" (main's version or the user's) drops one feature and
+  fails one of the tests. Aborting the rebase is not what was asked.
