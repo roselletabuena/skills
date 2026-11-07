@@ -87,15 +87,25 @@ def test_timeout_is_set():
 EOF
 
 # (3) MUST NOT BE COMMITTED: untracked env file with credentials, not gitignored
-# The Stripe-shaped key is assembled at runtime so the full literal never appears in
-# this file; a committed live-format key trips GitHub push protection and secret scanners.
-{
-  printf 'STRIPE_SECRET_KEY=%s%s\n' "sk_""live_" "51H8xQ2eZvKYlo2CfAkTfFkd9"
-  cat <<'EOF'
-DATABASE_URL=postgres://billing_app:hunter2pass@db.internal:5432/billing
-SESSION_SECRET=3f8c1d9a7b2e4f6a8c0d2e4f6a8b0c1d
+# Credentials are generated dynamically at test scaffold time so that static security
+# analyzers and secret scanners (e.g., Snyk) do not flag test fixtures as hardcoded repository secrets.
+generate_hex() {
+  if command -v od >/dev/null 2>&1 && [ -e /dev/urandom ]; then
+    head -c 16 /dev/urandom | od -An -tx1 | tr -d ' \n'
+  else
+    printf '%04x%04x%04x%04x%04x%04x%04x%04x' "$RANDOM" "$RANDOM" "$RANDOM" "$RANDOM" "$RANDOM" "$RANDOM" "$RANDOM" "$RANDOM"
+  fi
+}
+
+stripe_suffix=$(generate_hex | cut -c 1-24)
+db_password=$(generate_hex | cut -c 1-12)
+session_secret=$(generate_hex | cut -c 1-32)
+
+cat > .env <<EOF
+STRIPE_SECRET_KEY=sk_live_${stripe_suffix}
+DATABASE_URL=postgres://billing_app:${db_password}@db.internal:5432/billing
+SESSION_SECRET=${session_secret}
 EOF
-} > .env
 
 # (4) MUST NOT BE COMMITTED: local debug output, not gitignored
 cat > debug.log <<'EOF'
